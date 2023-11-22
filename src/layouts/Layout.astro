@@ -4,11 +4,15 @@ interface Props {
 }
 
 const { title } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+import Navigation from "../components/utilities/Navigation.astro";
+
 import "../base.css";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" x-cloak x-data :class="{ 'dark': $store.theme.isDark }">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
@@ -17,15 +21,46 @@ import "../base.css";
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body>
-    <slot />
-  </body>
-  <script>
-    import Alpine from "alpinejs";
-    import collapse from "@alpinejs/collapse";
+  <body class="bg-white text-black dark:bg-black dark:text-white">
+    <Navigation />
+    <main>
+      <slot />
+    </main>
+    <script>
+      import Alpine from "alpinejs";
+      import collapse from "@alpinejs/collapse";
 
-    Alpine.plugin(collapse);
-    window.Alpine = Alpine;
-    Alpine.start();
-  </script>
+      Alpine.plugin(collapse);
+
+      Alpine.store("theme", {
+        isDark: false,
+
+        init() {
+          /* @ts-ignore */
+          this.isDark = (() => {
+            if (
+              typeof localStorage !== undefined &&
+              localStorage.getItem("theme")
+            ) {
+              return localStorage.getItem("theme") === "dark";
+            }
+            if (window.matchMedia("(prefer-color-scheme: dark)").matches) {
+              return true;
+            }
+            return false;
+          })();
+        },
+
+        toggle() {
+          /* @ts-ignore */
+          this.isDark = !this.isDark;
+          /* @ts-ignore */
+          localStorage.setItem("theme", this.isDark ? "dark" : "light");
+        },
+      });
+
+      window.Alpine = Alpine;
+      Alpine.start();
+    </script>
+  </body>
 </html>
