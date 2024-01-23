@@ -1,4 +1,6 @@
 ---
+import { Icon } from "astro-icon/components";
+
 export const pages = [
   {
     name: "Home",
@@ -29,7 +31,7 @@ export const pages = [
   x-data="{ open: false }"
 >
   <!-- Brand Logo -->
-  <a href="/" aria-label="Back to Home" role="button" tabindex="0">
+  <a href="/" aria-label="Back to Home" role="button">
     <img
       :src="!$store.theme.isDark ? '/assets/logo-max-black.svg' : '/assets/logo-max-white.svg'"
       class="h-12"
@@ -48,7 +50,7 @@ export const pages = [
             return page.cta ? (
               <li>
                 <a
-                  class="bg-primary hover:bg-primary/60 inline-block rounded-lg px-4 py-2 text-xl tracking-wide transition-colors "
+                  class="inline-block rounded-lg bg-primary px-4 py-2 text-xl tracking-wide transition-colors hover:bg-primary/60 "
                   href={page.path}
                 >
                   {page.name}
@@ -74,43 +76,21 @@ export const pages = [
       type="button"
       x-data
       @click="$store.theme.toggle()"
-      class="hover:text-primary focus-visible:outline-accent rounded p-2 outline-none transition-colors hover:bg-black/5 dark:hover:bg-white/5"
+      class="focus-visible:outline-accent rounded p-2 outline-none transition-colors hover:bg-black/5 hover:text-primary dark:hover:bg-white/5"
     >
       <span class="sr-only">Toggle theme</span>
-      <svg
+      <Icon
         x-cloak
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="h-6 w-6"
+        name="heroicons:sun"
+        class="text-2xl"
         :class="{'hidden': $store.theme.isDark}"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
-        >
-        </path>
-      </svg>
-      <svg
+      />
+      <Icon
         x-cloak
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="h-6 w-6"
+        name="heroicons:moon"
+        class="text-2xl"
         :class="{'hidden': !$store.theme.isDark}"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
-        >
-        </path>
-      </svg>
+      />
     </button>
 
     <button
@@ -121,7 +101,7 @@ export const pages = [
       aria-expanded="false"
       :aria-expanded="open.toString()"
       aria-controls="website-menu"
-      class="hover:text-primary focus-visible:outline-accent block rounded p-2 outline-none transition-colors hover:bg-black/5 dark:hover:bg-white/5 lg:hidden"
+      class="focus-visible:outline-accent block rounded p-2 outline-none transition-colors hover:bg-black/5 hover:text-primary dark:hover:bg-white/5 lg:hidden"
     >
       <span class="sr-only">Toggle mobile navigation</span>
       <svg

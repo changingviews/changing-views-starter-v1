@@ -1,0 +1,113 @@
+---
+import { Icon } from "astro-icon/components";
+import { pages } from "./Navigation.astro";
+
+const contactInfo = {
+  tel: "+1 (229) 854 8201",
+  email: "aarika.andersson@gmail.com",
+  socials: [
+    {
+      name: "youtube",
+      href: "http://www.youtube.com/@lunarharmonyyoga",
+    },
+  ],
+};
+---
+
+<footer>
+  <div
+    class="container mx-auto flex flex-col items-center justify-center gap-8 px-4 py-16 md:flex-row md:items-start md:justify-between"
+  >
+    <div class="w-fit">
+      <!-- Brand Logo -->
+      <a href="/" aria-label="Back to Home" role="button" tabindex="0">
+        <img
+          :src="!$store.theme.isDark ? '/assets/logo-max-black.svg' : '/assets/logo-max-white.svg'"
+          class="h-20"
+          height="80"
+          width="156"
+          alt="Lunar Harmony Yoga Studio Logo"
+        />
+      </a>
+      <p class="paragraph mt-4 w-48 text-center text-sm md:text-left">
+        Stimulating your well-being through yoga, mindfulness, and sound
+        frequencies.
+      </p>
+    </div>
+    <div class="grid w-fit gap-2">
+      <h3 class="text-xl">Navigation</h3>
+      <ul class="start flex flex-col items-center gap-2">
+        {
+          pages.map((page) => (
+            <li>
+              <a
+                class="font-heading text-base font-medium hover:text-primary"
+                href={page.path}
+              >
+                {page.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div
+      class="flex w-fit flex-col items-center justify-between gap-4 text-center md:items-start md:text-left"
+    >
+      <div class="grid gap-4">
+        <h3 class="text-xl">Contact</h3>
+        <div class="grid gap-2">
+          <div class="flex items-center gap-2">
+            <Icon name="heroicons:phone-20-solid" class="text-lg" />
+            <a
+              href={`tel:+${contactInfo.tel.replace(/\D/g, "")}`}
+              class="underline-offset-2 hover:underline"
+            >
+              {contactInfo.tel}
+            </a>
+          </div>
+          <div class="flex items-center gap-2">
+            <Icon name="heroicons:envelope-20-solid" class="text-lg" />
+
+            <a
+              href={`mailto:${contactInfo.email}`}
+              class="underline-offset-2 hover:underline"
+            >
+              {contactInfo.email}
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="flex gap-4">
+        {
+          contactInfo.socials.map((social) => (
+            <div class="flex items-center gap-2">
+              <a
+                aria-label={social.name}
+                target="_blank"
+                referrerpolicy="no-referrer"
+                href={social.href}
+                class="inline-block transition-transform hover:scale-110"
+              >
+                <Icon name={`simple-icons:${social.name}`} class="text-2xl" />
+              </a>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="container mx-auto border-t border-black/20 dark:border-white/20">
+    <p class="mx-auto w-fit py-8 text-sm font-light">
+      © Copyright {new Date(Date.now()).getFullYear()} - made by <a
+        target="_blank"
+        referrerpolicy="no-referrer"
+        href="https://changingviews.media/"
+        class="underline-offset-2 hover:underline"
+      >
+        Changing Views Media
+      </a>
+    </p>
+  </div>
+</footer>
